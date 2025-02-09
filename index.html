@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page - My Website</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="custom.css" />
+    <style> 
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #ff5555;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        
+        #admin-btn {
+            background-color : #393737 !important  ; 
+            margin-left  : 60%;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            background-color: #fff;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        button {
+            background-color: #ff5555 !important ;
+             color: white !important; 
+            border: none !important; 
+             font-size: 18px ; 
+             border-radius: 10px !important;
+     cursor: pointer; 
+            transition: background-color 0.3s ease;
+        
+        }
+        
+        button:hover {
+            background-color: #737577;
+        }
+        
+
+        
+        /* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333; 
+    color: white;
+    width: 100%;
+}
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header class="text-white text-center d-flex justify-content-center ">
+        <div class="container ">
+            <img src="./icons/icon.png"  style="width : 100px ; height :100px  ; background-color : transparent" class="">
+            <h1>Welcome to Safe Connect</h1>
+
+        </div>
+   
+    </header>
+
+    <main class="container my-5">
+        <div class="row g-3">
+          <!-- First Button: Sign Up -->
+          <div class="col-md-6">
+            <button class="button  btn btn-primary" id="signup-btn">Sign Up</button>
+          </div>
+          
+          <!-- Second Button: Sign In -->
+          <div class="col-md-6">
+            <button class="button btn btn-primary " id="signin-btn">Sign In</button>
+          </div>
+          
+          <!-- Third Button: Admin -->
+          <div class="col-6 ">
+            <button class="button  btn btn-primary btn-dark " id="admin-btn" data-bs-toggle="modal" data-bs-target="#adminModal">Admin</button>
+          </div>
+        </div>
+      </main>
+
+    <footer class="bg-light text-center py-3">
+        <p>&copy; 2024 My Website</p>
+    </footer>
+
+    <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Admin Passcode</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="password" class="form-control" id="adminPasscode" placeholder="Enter passcode">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="background-color : #ff5555" id="submitAdmin">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Growing Specialists. All Rights Reserved.</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('signup-btn').addEventListener('click', function() {
+            window.location.href = 'signupPage.html';
+        });
+
+        document.getElementById('signin-btn').addEventListener('click', function() {
+            window.location.href = 'signinPage.html';
+        });
+
+        document.getElementById('submitAdmin').addEventListener('click', function() {
+            var passcode = document.getElementById("adminPasscode").value;
+            if (passcode === "12345") {
+                window.location.href = "admin_dashboard.php";
+            } else {
+                alert("Incorrect passcode. Access denied.");
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="custom.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #ff5555;
+        }
+
+        .save-button {
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .save-button:hover {
+            background-color: #737577;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
+            display: none;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .save-button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Sign Up</h2>
+
+        <div class="mb-4">
+            <label class="form-label">I am a:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="client" name="role" value="client" onclick="toggleForm('client')" required checked>
+                <label class="form-check-label" for="client">Client</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="specialist" name="role" value="specialist" onclick="toggleForm('specialist')">
+                <label class="form-check-label" for="specialist">Specialist</label>
+            </div>
+        </div>
+
+        <form id="client-form" method="POST" action="save_client.php">
+            <div class="mb-3">
+                <label for="client-name" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="client-name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="client-email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="client-email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="client-password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="client-password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn save-button">Sign Up</button>
+        </form>
+
+        <form id="specialist-form" class="d-none" method="POST" action="save_specialist.php" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="specialist-name" class="form-label">Name:</label>
+                <input type="text" class="form-control" id="specialist-name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="specialist-email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="specialist-email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="specialist-password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="specialist-password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="specialist-experience" class="form-label">Years of Experience:</label>
+                <select class="form-select" id="specialist-experience" name="experience" required>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="specialist-bio" class="form-label">Bio:</label>
+                <textarea class="form-control" id="specialist-bio" name="bio" rows="4" placeholder="Enter your bio here" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="certificate" class="form-label">Upload Certificate (PDF, JPG, PNG):</label>
+                <input type="file" class="form-control" id="certificate" name="certificate" accept=".pdf, .jpg, .jpeg, .png" required>
+            </div>
+
+            <button type="submit" class="btn save-button">Sign Up</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const experienceDropdown = document.getElementById('specialist-experience');
+            for (let i = 1; i <= 30; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i} year${i > 1 ? 's' : ''}`;
+                experienceDropdown.appendChild(option);
+            }
+        });
+
+        function toggleForm(role) {
+            const clientForm = document.getElementById('client-form');
+            const specialistForm = document.getElementById('specialist-form');
+
+            if (role === 'client') {
+                clientForm.classList.remove('d-none');
+                specialistForm.classList.add('d-none');
+            } else if (role === 'specialist') {
+                clientForm.classList.add('d-none');
+                specialistForm.classList.remove('d-none');
+            }
+        }
+
+    </script>
+</body>
+
+</html>

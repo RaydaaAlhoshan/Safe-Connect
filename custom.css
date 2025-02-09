@@ -1,0 +1,16 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif !important;
+  }
+  
+  /* If you need different weights or fallback, define them: */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-weight: 700;
+  }
+  
+  /* Additional custom overrides or classes as needed */
+  .btn {
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-weight: 400;
+  }
+  

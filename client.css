@@ -1,0 +1,137 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* Background color */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ff5555; 
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #737577; /* Gold on hover */
+}
+
+/* Main container */
+.container {
+    flex: 1; /* Allow the container to grow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    overflow: hidden; /* Prevent scrollbar for the Swiper */
+}
+
+.swiper-container {
+    width: 30%;
+    max-width: 900px;
+    height: 350px;
+    position: relative; /* For positioning buttons */
+}
+
+.swiper-slide {
+    background-color: #ffffff; /* White */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.swiper-slide:hover {
+    transform: scale(1.05);
+}
+
+.swiper-slide h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.swiper-slide p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.swiper-slide button {
+    background-color: #ff5555; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.swiper-slide button:hover {
+    background-color: #737577; 
+}
+
+/* Navigation buttons */
+.swiper-button-next, .swiper-button-prev {
+    color: #ff5555; 
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333; 
+    color: white;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .swiper-slide h3 {
+        font-size: 22px;
+    }
+
+    .swiper-slide p {
+        font-size: 14px;
+    }
+
+    .swiper-slide button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .swiper-slide {
+        padding: 20px;
+    }
+
+    .navbar a {
+        font-size: 14px;
+    }
+}

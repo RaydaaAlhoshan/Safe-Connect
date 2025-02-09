@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+
+    <link rel="stylesheet" href="custom.css" />
+
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .profile-container p {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .save-button {
+            padding: 10px 20px;
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #e16161;
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
+            display: none; /* Hidden by default */
+        }
+
+        @media (max-width: 500px) {
+            .profile-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .profile-container img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <img id="user-certificate" src="" alt="User Certificate">
+        <p id="user-name"></p>
+        <p id="user-email"></p>
+        <p id="user-role"></p>
+        <p id="user-phone"></p>
+        <p id="user-password"></p>
+        <div class="error-message" id="error-message"></div>
+        <center>
+            <button type="button" class="save-button" onclick="saveProfile()">Save</button>
+        </center>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const email = urlParams.get('email');
+            const role = urlParams.get('role');
+            const phone = urlParams.get('phone');
+            const password = urlParams.get('password');
+            const certificate = urlParams.get('certificate');
+
+            document.getElementById('user-name').textContent = "Name: " + name;
+            document.getElementById('user-email').textContent = "Email: " + email;
+            document.getElementById('user-role').textContent = "Role: " + role;
+            document.getElementById('user-password').textContent = "Password: " + password;
+
+            if (role !== "specialist") {
+                document.getElementById('user-phone').textContent = "Phone: " + phone;
+            }
+            document.getElementById('user-certificate').src = certificate;
+        });
+
+        function saveProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const role = urlParams.get('role');
+            let data = {};
+            const errorMessage = document.getElementById('error-message');
+
+            // Validate user input before sending to server
+            const name = document.getElementById('user-name').textContent.replace('Name: ', '');
+            const email = document.getElementById('user-email').textContent.replace('Email: ', '');
+            const password = document.getElementById('user-password').textContent.replace('Password: ', '');
+            const certificate = document.getElementById('user-certificate').src;
+
+            if (role === "specialist") {
+                data = { name, email, password, role, certificate };
+            } else {
+                const phone = document.getElementById('user-phone').textContent.replace('Phone: ', '');
+                data = { name, email, password, phone, role };
+            }
+
+            // Check for empty fields
+            if (!name || !email || !password || (role !== "specialist" && !phone)) {
+                errorMessage.textContent = "All fields are required.";
+                errorMessage.style.display = 'block';
+                return;
+            } else {
+                errorMessage.style.display = 'none'; // Hide error message if everything is fine
+            }
+
+            fetch(role === "specialist" ? 'http://localhost/project_sin_up/special_signup.php' : 'http://localhost/project_sin_up/client_signup.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Profile Created successfully!');
+                    window.location.href = 'http://localhost/project_sin_up/index.html';
+                } else {
+                    errorMessage.textContent = 'Create failed: ' + result.message;
+                    errorMessage.style.display = 'block'; // Show error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Log the error
+                alert('An error occurred. Please try again.');
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Status</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="custom.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .status-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #statusMessage {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #actionButtons button {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container status-container">
+        <h1 id="statusMessage">Loading status...</h1>
+        <div id="actionButtons">
+            <!-- The Back or Sign-In button will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function fetchStatus() {
+            fetch('update_status.php', { method: 'GET' })
+                .then(response =>  { 
+                    
+                    console.log(response ) ; 
+                    return response.json() } )
+                .then(data => {
+                    const messageElement = document.getElementById('statusMessage');
+                    const actionButtons = document.getElementById('actionButtons');
+                    const button = document.createElement('button');
+                    console.log(data) ; 
+                    if (data.status === 'approved') {
+                        messageElement.textContent = 'Certificate is approved';
+                        messageElement.classList.remove('text-warning', 'text-danger');
+                        messageElement.classList.add('text-success');
+
+                        button.textContent = 'Continue';
+                        button.className = 'btn btn-primary';
+                        button.onclick = () => {
+                            window.location.href = 'signinPage.html';
+                        };
+                    } else if (data.status === 'pending') {
+                        messageElement.textContent = 'Wait for certificate approval';
+                        messageElement.classList.remove('text-success', 'text-danger');
+                        messageElement.classList.add('text-warning');
+
+                        button.textContent = 'Back to Home';
+                        button.className = 'btn btn-secondary';
+                        button.onclick = () => {
+                            window.location.href = 'index.html';
+                        };
+                    } else if (data.status === 'decliend') {
+                        messageElement.textContent = 'Certificate is not approved';
+                        messageElement.classList.remove('text-success', 'text-warning');
+                        messageElement.classList.add('text-danger');
+
+                        button.textContent = 'Back to Home';
+                        button.className = 'btn btn-secondary';
+                        button.onclick = () => {
+                            window.location.href = 'index.html';
+                        };
+                    } else {
+                        messageElement.textContent = 'Unknown status';
+                        messageElement.classList.remove('text-success', 'text-warning', 'text-danger');
+                        messageElement.classList.add('text-dark');
+
+                        button.textContent = 'Back to Home';
+                        button.className = 'btn btn-secondary';
+                        button.onclick = () => {
+                            window.location.href = 'index.html';
+                        };
+                    }
+
+                    actionButtons.innerHTML = ''; // Clear any existing buttons
+                    actionButtons.appendChild(button); // Add the button
+                })
+                .catch(error => {
+                    console.log('Error fetching status:', error.message);
+                    const messageElement = document.getElementById('statusMessage');
+                    const actionButtons = document.getElementById('actionButtons');
+
+                    messageElement.textContent = 'An error occurred while fetching the status.';
+                    messageElement.classList.remove('text-success', 'text-warning');
+                    messageElement.classList.add('text-danger');
+
+                    const button = document.createElement('button');
+                    button.textContent = 'Retry';
+                    button.className = 'btn btn-warning';
+                    button.onclick = () => {
+                        fetchStatus();
+                    };
+
+                    actionButtons.innerHTML = '';
+                    actionButtons.appendChild(button);
+                });
+        }
+
+        // Automatically fetch status on page load
+        document.addEventListener('DOMContentLoaded', fetchStatus);
+    </script>
+</body>
+
+</html>

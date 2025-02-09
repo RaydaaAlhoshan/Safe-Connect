@@ -1,0 +1,117 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: rgb(20, 19, 19);
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+    background: rgb(192, 64, 64);
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Main content styling */
+main {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* Footer Styles */
+footer {
+    background: rgb(84, 85, 82);
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto; /* Ensure footer always stays at the bottom */
+}
+
+/* Button Container and Styles */
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+button {
+    width: 200px; /* Same width for both buttons */
+    padding: 15px 30px; /* Same padding for both */
+    font-size: 1.2em; /* Ensure font size is consistent */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.specialist-btn {
+    background-color: #FF5733; /* Same color as before */
+}
+
+.client-btn {
+    background-color: #337AFF; /* Same color as before */
+}
+
+button:hover {
+    opacity: 0.8; /* Hover effect for both buttons */
+}
+
+/* Form Container */
+.form-container {
+    width: 300px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container input,
+.form-container select,
+.form-container button,
+.form-container textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container label {
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Submit button styles */
+.save-button {
+    padding: 10px 20px;
+    background-color: rgb(192, 64, 64);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-button:hover {
+    background-color: darkred;
+}
+
+/* Hidden class to toggle visibility */
+.hidden {
+    display: none;
+}

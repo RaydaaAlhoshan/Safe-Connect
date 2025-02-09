@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.status-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.status-header {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.status {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.action-button {
+    padding: 12px 20px;
+    background-color: #737577;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    display: none;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #737577;
+}
+
+.declined {
+    color: #ff0000;
+}

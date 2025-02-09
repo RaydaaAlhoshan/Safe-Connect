@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="custom.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .save-button {
+            background-color: rgb(192, 64, 64);
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .save-button:hover {
+            background-color: #ff5555;
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2 class="text-center mb-4">Sign In</h2>
+        <form id="signin-form" method="post">
+            <div class="mb-3">
+                <label class="form-label">Select your role:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="client" name="role" value="client" checked>
+                    <label class="form-check-label" for="client">
+                        Client
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="specialist" name="role" value="specialist">
+                    <label class="form-check-label" for="specialist">
+                        Specialist
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="error-message" id="error-message"></div>
+
+            <button type="submit" class="btn save-button" onclick="submitForm(event)">Sign In</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (!email || !password) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const form = document.getElementById('signin-form');
+            const formData = new FormData(form);
+
+            fetch('signin.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const errorMessage = document.getElementById('error-message');
+                    if (data.success) {
+
+                        console.log(data) ; 
+                        if (data.role === 'client') {
+                            window.location.href = 'clientHomePage.php';
+                        } else if (data.role === 'specialist') {
+                            window.location.href = 'specialistHomePage.php';
+                        }
+                    } else {
+                        errorMessage.innerText = 'Sign-in failed: ' + data.message;
+                        errorMessage.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred during sign-in. Please try again.');
+                });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
